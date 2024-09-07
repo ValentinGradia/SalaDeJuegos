@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.presentacion{
+    display: flex;
+    padding-left: 17%;
+}
+
+img{
+    width: 350px;
+    height: 350px;
+}
+
+.encabezado{
+    font-size: 25px;
+    color: rgb(95, 94, 94);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.titulo-presentacion{
+    margin-top: 20px;
+    font-size: 55px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.subtitulo-presentacion{
+    margin-top: 80px;
+    font-size: 30px;
+    color: rgb(152, 150, 150);
+}

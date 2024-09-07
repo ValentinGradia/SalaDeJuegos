@@ -9,7 +9,6 @@ import { AppComponent } from "../../app.component";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  
   @ViewChild('container') container!: ElementRef;
   @ViewChild('register') registerBtn!: ElementRef;
   @ViewChild('login') loginBtn!: ElementRef;

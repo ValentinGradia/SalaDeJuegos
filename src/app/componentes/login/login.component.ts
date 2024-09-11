@@ -1,10 +1,12 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, Input  } from '@angular/core';
 import { AppComponent } from "../../app.component";
+import Swal from 'sweetalert2';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [AppComponent],
+  imports: [AppComponent, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -13,7 +15,20 @@ export class LoginComponent {
   @ViewChild('register') registerBtn!: ElementRef;
   @ViewChild('login') loginBtn!: ElementRef;
   @ViewChild('loginToggle') loginToggleBtn!: ElementRef;
-  @ViewChild('registerToggle') registerToggleBtn!: ElementRef;
+  @ViewChild('registerToggle') registerToggleBtn!: ElementRef
+
+  constructor(private router : Router){}
+
+  accederAplicacion(msg : string)
+  {
+    Swal.fire({
+      icon: "success",
+      title: "Usuario "+msg+" con exito",
+      showConfirmButton: false,
+      timer: 1500
+    });
+    this.router.navigate(['/home']);
+  }
 
   ngAfterViewInit() {
     //Acceder y manipular el Dom

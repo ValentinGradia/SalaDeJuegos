@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import Swal from 'sweetalert2';
+import { HeaderComponent } from './componentes/header/header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent, FontAwesomeModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

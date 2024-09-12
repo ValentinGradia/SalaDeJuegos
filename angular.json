@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "SalaJuegos": {
+    "salajuegos": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "SalaJuegos:build:production"
+              "buildTarget": "salajuegos:build:production"
             },
             "development": {
-              "buildTarget": "SalaJuegos:build:development"
+              "buildTarget": "salajuegos:build:development"
             }
           },
           "defaultConfiguration": "development"

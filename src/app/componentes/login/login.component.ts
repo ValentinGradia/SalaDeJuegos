@@ -35,8 +35,8 @@ export class LoginComponent {
     const container = this.container.nativeElement;
     const registerBtn = this.registerBtn.nativeElement;
     const loginBtn = this.loginBtn.nativeElement;
-    const loginToggleBtn = this.loginToggleBtn?.nativeElement;
-    const registerToggleBtn = this.registerToggleBtn?.nativeElement;
+    const loginToggleBtn = this.loginToggleBtn.nativeElement;
+    const registerToggleBtn = this.registerToggleBtn.nativeElement;
 
     if (container && registerBtn && loginBtn && loginToggleBtn && registerToggleBtn) {
       registerBtn.addEventListener('click', () => {
@@ -54,8 +54,6 @@ export class LoginComponent {
       registerToggleBtn.addEventListener('click', () => {
         container.classList.add('active');
       });
-    } else {
-      console.error('Elementos no encontrados en ViewChild');
     }
   }
 }

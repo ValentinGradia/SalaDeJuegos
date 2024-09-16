@@ -3,19 +3,17 @@
         <div class="form-container sign-up">
             <form>
                 <h1>Create un usuario</h1>
-                <input type="text" placeholder="Nombre">
-                <input type="text" placeholder="Apellido">
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Contraseña">
-                <button #register (click)="accederAplicacion('registrado')">Registrarme</button>
+                <button #register (click)="accederAplicacion()">Registrarme</button>
             </form>
         </div>
         <div class="form-container sign-in">
             <form>
                 <h1>Inicia Sesion</h1>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Contraseña">
-                <button #login (click)="accederAplicacion('logeado')">Iniciar</button>
+                <input type="email" [(ngModel)]="correo" name="email" placeholder="Email">
+                <input type="password" [(ngModel)]="contrasenia" name="contraseña"  placeholder="Contraseña">
+                <button #login (click)="accederAplicacionLogin()">Iniciar</button>
             </form>
         </div>
         <div class="toggle-container">

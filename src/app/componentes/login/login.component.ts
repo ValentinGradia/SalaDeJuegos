@@ -63,7 +63,7 @@ export class LoginComponent {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error.message
+        text: "Campos incorrectos"
       });
     });
   }

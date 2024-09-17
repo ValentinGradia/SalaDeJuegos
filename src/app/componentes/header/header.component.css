@@ -43,6 +43,13 @@ nav {
     background-color: white;
 }
 
+.nav-links .salir:hover{
+    color: white;
+    background-color: red;
+}
+
+
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     header {

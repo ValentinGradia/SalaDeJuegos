@@ -1,10 +1,12 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, Input,Inject  } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, Input,Inject, Output, OnInit  } from '@angular/core';
 import { AppComponent } from "../../app.component";
 import Swal from 'sweetalert2';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, Unsubscribe, user } from '@angular/fire/auth';
 import { error } from 'console';
+import { Usuario } from '../../clases/usuario';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -13,22 +15,24 @@ import { error } from 'console';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent{
   correo !: string;
   contrasenia !: string;
+  authSubscription?: Unsubscribe;
   @ViewChild('container') container!: ElementRef;
   @ViewChild('register') registerBtn!: ElementRef;
   @ViewChild('login') loginBtn!: ElementRef;
   @ViewChild('loginToggle') loginToggleBtn!: ElementRef;
   @ViewChild('registerToggle') registerToggleBtn!: ElementRef
 
-  constructor(private router : Router, private auth : Auth){}
+  constructor(private router : Router, private userService : UsuarioService){}
 
 
   accederAplicacion()
   {
-    createUserWithEmailAndPassword(this.auth, this.correo, this.contrasenia)
-    .then((userCredential) => {
+    try
+    {
+      this.userService.registrarUsuario(this.correo,this.contrasenia);
       Swal.fire({
         icon: "success",
         title: "Usuario registrado con exito",
@@ -36,36 +40,39 @@ export class LoginComponent {
         timer: 1500
       });
       this.router.navigate(['/home']);
-    })
-    .catch((error) => {
+    }
+    catch(error : any)
+    {
       Swal.fire({
         icon: "error",
         title: "Error",
         text: error.message
       });
-    });
+    }
   }
 
   accederAplicacionLogin()
   {
-    signInWithEmailAndPassword(this.auth,this.correo,this.contrasenia)
-    .then((user) => {
+    try
+    {
+
+      this.userService.loguearUsuario(this.correo,this.contrasenia);
       Swal.fire({
         icon: "success",
-        title: "Usuario logeado con exito",
+        title: "Usuario logueado con exito",
         showConfirmButton: false,
         timer: 1500
       });
-      console.log(user);
       this.router.navigate(['/home']);
-    })
-    .catch((error) => {
+    }
+    catch(error : any)
+    {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Campos incorrectos"
+        text: error.message
       });
-    });
+    }
   }
 
   ngAfterViewInit() {

@@ -2,7 +2,7 @@ export class Usuario {
     nombre : string = '';
     apellido : string = '';
     mail : string = '';
-    private contraseña : string = '';
+    contraseña : string = '';
 
     constructor(nombreParam:string, apellidoParam:string, mailParam:string, contraseñaParam:string)
     {

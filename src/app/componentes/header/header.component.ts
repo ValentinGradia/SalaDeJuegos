@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
 import Swal from 'sweetalert2';
 import { error } from 'console';
+import { Usuario } from '../../clases/usuario';
 
 
 

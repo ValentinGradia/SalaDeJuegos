@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, RouterModule],
+  imports: [RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -22,9 +22,7 @@ export class HomeComponent implements OnInit  {
 
   ngOnInit() : void 
   {
-
-    //este metodo se ejecuta cada vez que el estado de autenticacion cambia
-    //this.subscription = 
+    
   }
 
   ngOnDestroy(): void

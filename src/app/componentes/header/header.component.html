@@ -5,9 +5,16 @@
     </div>
     <nav>
         <ul class="nav-links">
+            @if (correoUsuario != null) {
+                <li><a routerLink="/chat"><i class="fa-solid fa-comment fa-xl"></i></a></li>
+                <li [textContent]="[correoUsuario]" style="color: white;"></li>
+                <li><a class="salir" (click)="cerrarSesion()"><i class="fa-solid fa-right-from-bracket" style="padding-right: 9px;"></i>Salir</a></li>
+            }
+            @else {
+                <li><a routerLink="/login">Iniciar sesion</a></li>
+            }
             <li><a routerLink="/home">Home</a></li>
             <li><a routerLink="/quienSoy">Quién Soy</a></li>
-            <li><a class="salir" (click)="cerrarSesion()"><i class="fa-solid fa-right-from-bracket" style="padding-right: 9px;"></i>Salir</a></li>
         </ul>
     </nav>
 </header>

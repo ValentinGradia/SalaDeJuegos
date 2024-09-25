@@ -1,4 +1,4 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +6,8 @@ import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signO
 import Swal from 'sweetalert2';
 import { error } from 'console';
 import { Usuario } from '../../clases/usuario';
+import { UsuarioService } from '../../services/usuario.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -16,11 +18,19 @@ import { Usuario } from '../../clases/usuario';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
 
-  constructor(private auth : Auth, private router : Router){}
-
+  correoUsuario : string | null = null;
+  suscripcionUsuario: Subscription;
   faGamepad = faGamepad;
+
+  constructor(private auth : Auth, private router : Router, private userService: UsuarioService){
+    this.suscripcionUsuario= this.userService.correoUsuario$.subscribe(email => {
+      //con el metodo subscribe indico que quiero recibir los valores del observable
+      //en este caso el email
+      this.correoUsuario = email;
+    })
+  }
 
   cerrarSesion() {
     Swal.fire({
@@ -33,9 +43,13 @@ export class HeaderComponent {
       if (result.isConfirmed) {
         signOut(this.auth)
           .then(() => {
-            this.router.navigateByUrl("/login");
+            this.userService.limpiarCorreo();
           });
       } 
     });
+  }
+
+  ngOnDestroy(): void {
+      this.suscripcionUsuario?.unsubscribe();
   }
 }

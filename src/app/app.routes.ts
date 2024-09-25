@@ -3,11 +3,12 @@ import { HomeComponent } from './componentes/home/home.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
 import path from 'path';
+import { ChatComponent } from './componentes/chat/chat.component';
 
 export const routes: Routes = [
     {
         path : '',
-        redirectTo : '/login',
+        redirectTo : '/chat',
         pathMatch : 'full'
     },
     {
@@ -21,6 +22,10 @@ export const routes: Routes = [
     {
         path : 'quienSoy',
         component : QuienSoyComponent
+    },
+    {
+        path : 'chat',
+        component : ChatComponent
     },
     {
         path : '**',

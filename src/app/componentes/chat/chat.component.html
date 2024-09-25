@@ -1,0 +1,24 @@
+<div class="body">
+    <div class="chat">
+        <div class="chat-header">
+            <h2>Chat</h2>
+        </div>
+        <div class="chat-content" id="chatContent">
+            @for (chat of chats; track $index) {
+                <ul style="list-style-type: none;text-align: left;">
+                    <!--ngClass te permite agregar css dinamico aplicando condiciones
+                    aca estoy diciendo que cuando el correo lo mande el usuario logeado se aplice
+                    la clasechat-right (me manda el texto a la derrecha) -->
+                    <li [ngClass]="{'chat-right ': chat.correo === correoUsuarioActual}">
+                        <h1 style="font-weight: bold;font-size: 24px;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{chat.mensaje}}</h1>
+                        <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 13px;" class="diagonal-text">{{chat.correo + ' - ' + chat.fecha}}</p>
+                    </li>
+                </ul>
+            }
+        </div>
+        <div class="chat-bottom">
+            <input type="text" id="messageInput" [(ngModel)]="mensaje"  placeholder="Escribe un mensaje..." />
+            <button (click)="enviarMensaje()">Enviar</button>
+        </div>
+    </div>
+</div>

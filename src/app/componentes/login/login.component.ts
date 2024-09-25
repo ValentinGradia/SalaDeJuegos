@@ -28,18 +28,41 @@ export class LoginComponent{
   constructor(private router : Router, private userService : UsuarioService){}
 
 
+  llenarInputs(usuario : string)
+  {
+    switch(usuario)
+    {
+      case "admin":
+        this.correo = "user@user.com";
+        this.contrasenia = "333333";
+        break;
+      case "usuario":
+        this.correo = "ng@gmail.com";
+        this.contrasenia = "222222";
+        break;
+      default:
+        this.correo = "hola@gmail.com";
+        this.contrasenia = "654321";
+    }
+  }
+
   accederAplicacion()
   {
     try
     {
-      this.userService.registrarUsuario(this.correo,this.contrasenia);
+      var userCredential = this.userService.registrarUsuario(this.correo,this.contrasenia);
       Swal.fire({
         icon: "success",
         title: "Usuario registrado con exito",
         showConfirmButton: false,
         timer: 1500
       });
-      this.router.navigate(['/home']);
+      if(userCredential == null)
+      {
+        throw new Error;
+      }
+      this.userService.setearCorreo(this.correo);
+      this.router.navigateByUrl('/home');
     }
     catch(error : any)
     {
@@ -51,26 +74,33 @@ export class LoginComponent{
     }
   }
 
-  accederAplicacionLogin()
+  async accederAplicacionLogin()
   {
     try
     {
-
-      this.userService.loguearUsuario(this.correo,this.contrasenia);
+      const user  = await this.userService.loguearUsuario(this.correo,this.contrasenia);
       Swal.fire({
         icon: "success",
         title: "Usuario logueado con exito",
         showConfirmButton: false,
         timer: 1500
       });
-      this.router.navigate(['/home']);
+
+      if(user == null)
+      {
+        throw new Error();
+      }
+
+      //asigno el correo 
+      this.userService.setearCorreo(this.correo);
+      this.router.navigateByUrl('/home');
     }
     catch(error : any)
     {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error.message
+        text: "Campos incorrectos"
       });
     }
   }

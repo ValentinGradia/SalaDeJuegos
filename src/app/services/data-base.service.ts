@@ -1,25 +1,26 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Usuario } from '../clases/usuario';
 import { Observable } from 'rxjs';
 import { Chat } from '../clases/chat';
+import { Firestore, collection,addDoc,getDoc,getDocs,updateDoc, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataBaseService {
 
-  constructor(private firestore : AngularFirestore) { }
+  constructor(private firestore : Firestore) { }
 
   guardar(chat : Chat) : void
   {
-    const col = this.firestore.collection('Chat');
-    col.add({correo: chat.correo, fecha : chat.fecha, mensaje: chat.mensaje, Nombre: chat.nombre });
+    const col = collection(this.firestore, 'Chat');
+    addDoc(col,{correo: chat.correo, fecha : chat.fecha, mensaje: chat.mensaje});
   }
 
-  traerUsuarios() : Observable<any>
+  traerChats() : Observable<any>
   {
-    const col = this.firestore.collection('Chat');
+    const col = collection(this.firestore, 'Chat');
+    const obvervable = collectionData(col);
     
     //le toma una foto a la bbdd , trae los datos que estan en el momento que se ejecuta esta funcion
     // const observable = col.get();
@@ -29,8 +30,24 @@ export class DataBaseService {
     //   });
     // })
 
-    const observable = col.valueChanges();
+    //const observable = col.valueChanges();
 
-    return observable; //hacer el subsrcribe desde el componente
+    return obvervable; //hacer el subsrcribe desde el componente
+  }
+
+  actualizarChat(id : string, chatModificado : Chat)
+  {
+    const col = collection(this.firestore, 'Chat');
+    const documento = doc(col,id)
+    updateDoc(documento,{
+      correo: chatModificado.correo, fecha : chatModificado.fecha, mensaje: chatModificado.mensaje
+    });
+  }
+
+  eliminarChat(id : string)
+  {
+    const col = collection(this.firestore, 'Chat');
+    const documento = doc(col,id)
+    deleteDoc(documento);
   }
 }

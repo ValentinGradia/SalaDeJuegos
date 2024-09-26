@@ -22,6 +22,11 @@
     margin-bottom: 20px;
 }
 
+.ocultar{
+    color: transparent;
+    background-color: transparent;
+}
+
 .adivinada
 {
     color: black;

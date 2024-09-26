@@ -22,14 +22,16 @@ export class AhorcadoComponent implements OnInit {
 
   letrasARemover : Array<string> = [];
 
-  intentos : number = 5;
+  letrasApretadas : Array<string> = [];
+
+  intentos : number = 10;
 
   constructor(){}
 
   ngOnInit(): void {
     Swal.fire({
       title: "REGLAS",
-      text : 'Tendras que adivinar la palabra haciendo click en las letras que piensas que tendra la palabra. Dispondras de 5 intentos para adivinarla, buena suerte',
+      text : 'Tendras que adivinar la palabra haciendo click en las letras que piensas que tendra la palabra. Si la letra ya la presionaste se ocultara para que no te olvides cuales presionaste. Dispondras de 10 intentos para adivinarla, buena suerte!',
       confirmButtonText: "Entendido",
       hideClass: {
         popup: `
@@ -71,6 +73,7 @@ export class AhorcadoComponent implements OnInit {
     return this.letrasARemover.includes(letra);
   }
 
+
   elegirLetra(letra : string)
   {
 
@@ -84,8 +87,14 @@ export class AhorcadoComponent implements OnInit {
     }
     else
     {
-      this.intentos--;
+      //Evitar errores si vuelve a presionar la letra
+      if(!(this.letrasApretadas.includes(letra)))
+      {
+        this.intentos--;
+      }
     }
+
+    this.letrasApretadas.push(letra);
   }
 
 }

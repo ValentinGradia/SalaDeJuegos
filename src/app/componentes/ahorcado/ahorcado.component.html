@@ -16,7 +16,7 @@
     </div>
     <div class="letras-container">
         @for (letra of letras; track $index) {
-            <button (click)="elegirLetra(letras[$index])" class="letra">{{letras[$index].toUpperCase()}}</button>
+            <button [ngClass]="{'ocultar' : letrasApretadas.includes(letra)}"  (click)="elegirLetra(letras[$index])" class="letra">{{letras[$index].toUpperCase()}}</button>
         }
     </div>
 </div>

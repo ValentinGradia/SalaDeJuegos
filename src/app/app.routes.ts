@@ -5,6 +5,7 @@ import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
 import path from 'path';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { MayoromenorComponent } from './componentes/mayoromenor/mayoromenor.component';
+import { AhorcadoComponent } from './componentes/ahorcado/ahorcado.component';
 
 export const routes: Routes = [
     {
@@ -31,6 +32,10 @@ export const routes: Routes = [
     {
         path : 'mayorOMenor',
         component : MayoromenorComponent
+    },
+    {
+        path : 'ahorcado',
+        component : AhorcadoComponent
     },
     {
         path : '**',

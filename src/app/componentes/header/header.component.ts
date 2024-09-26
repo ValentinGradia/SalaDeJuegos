@@ -43,6 +43,7 @@ export class HeaderComponent implements OnDestroy {
       if (result.isConfirmed) {
         signOut(this.auth)
           .then(() => {
+            this.router.navigateByUrl('/home');
             this.userService.limpiarCorreo();
           });
       } 

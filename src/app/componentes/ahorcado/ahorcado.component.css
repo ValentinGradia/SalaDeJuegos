@@ -1,0 +1,50 @@
+.ahorcado-container {
+    width: 500px; 
+    margin: 0 auto;
+    text-align: center;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.normal
+{
+    color: transparent;
+}
+
+
+.imagen-ahorcado img {
+    width: 100%; 
+    max-width: 250px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.adivinada
+{
+    color: black;
+}
+
+
+.letras-container {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr); 
+    gap: 10px;
+}
+
+
+.letra {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #c0f0eb; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.letra:hover {
+    background-color: #a8d1c7; 
+}

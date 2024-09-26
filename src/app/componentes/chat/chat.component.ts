@@ -34,9 +34,14 @@ export class ChatComponent implements OnInit,OnDestroy {
         this.correoUsuarioActual = this.userService.correoUsuarioObservable.getValue()!;
         const observable = this.database.traerChats();
 
-        this.suscripcionChat = observable.subscribe((chat) => {
-          this.chats = chat as Chat[];
-        })
+        this.suscripcionChat = observable.subscribe((chats) => {
+          this.chats = chats.map((chat: any) => {
+            return {
+              ...chat, 
+              fecha: (chat.fecha && chat.fecha.toDate) ? chat.fecha.toDate() : chat.fecha // Convertir `Timestamp` a `Date`
+            } as Chat;
+          });
+        });
       }
   }
 

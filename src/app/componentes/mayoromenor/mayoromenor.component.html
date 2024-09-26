@@ -1,0 +1,18 @@
+<div class="body">
+    <div class="container">
+        <div class="mesa">
+            <div class="card">
+                <img [src]="srcCartaActual"   alt="Carta" class="card-image">
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="btn" (click)="mayor()">Mayor</button>
+            <button class="btn" (click)="menor()">Menor</button>
+        </div>
+        <div class="puntaje" style="margin-top: 25px;">
+            <h2>Puntaje: {{puntaje}}</h2>
+        </div>
+    </div>
+</div>
+
+

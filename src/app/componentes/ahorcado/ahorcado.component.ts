@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ahorcado',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, RouterModule],
   templateUrl: './ahorcado.component.html',
   styleUrl: './ahorcado.component.css'
 })
@@ -26,7 +27,7 @@ export class AhorcadoComponent implements OnInit {
 
   intentos : number = 10;
 
-  constructor(){}
+  constructor(private router : Router){}
 
   ngOnInit(): void {
     Swal.fire({
@@ -51,7 +52,7 @@ export class AhorcadoComponent implements OnInit {
   {
     var indiceAleatorio = Math.floor(Math.random() * this.palabras.length);
     this.palabraAdivinar = this.palabras[indiceAleatorio];
-    this.llenarCasilleros(this.palabraAdivinar.length);
+
     console.log(this.palabraAdivinar);
   }
 
@@ -60,11 +61,6 @@ export class AhorcadoComponent implements OnInit {
   letraSinAdivinar(letra : string)
   {
     return !this.letrasARemover.includes(letra);
-  }
-
-  llenarCasilleros(length : number) : void
-  {
-
   }
 
   //funcion que la creamos para mostrar las letras cuando aciertan
@@ -94,7 +90,56 @@ export class AhorcadoComponent implements OnInit {
       }
     }
 
+    var letrasJuntas = this.letrasARemover.join('');
+
+    var cantLetrasIguales = 0
+    var cantLetras = this.palabraAdivinar.length;
+    for(let letra of this.palabraAdivinar)
+    {
+      //h
+      for(let otraletra of letrasJuntas)// alho
+      {
+        if(letra == otraletra)
+        {
+          cantLetrasIguales++;
+          break;
+        }
+      }
+    }
+
+    if(cantLetras == cantLetrasIguales)
+    {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Felicidades , haz ganado!!!!",
+        text : "¿Quieres volver a jugar?",
+        showConfirmButton: true,
+        confirmButtonText : "Si",
+        showDenyButton: true,
+        denyButtonText : "No"
+      }).then((respuesta) => {
+        if(respuesta.isConfirmed)
+        {
+          this.volverAEmpezar();
+        }
+        else if(respuesta.isDenied)
+        {
+          this.router.navigateByUrl('/home');
+        }
+      });
+    }
+
     this.letrasApretadas.push(letra);
+  }
+
+
+  volverAEmpezar() : void
+  {
+    this.elegirPalabra();
+    this.letrasARemover = [];
+    this.letrasApretadas = [];
+    this.intentos = 10;
   }
 
 }

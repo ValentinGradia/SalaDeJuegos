@@ -46,7 +46,7 @@ export class PreguntadosComponent implements OnInit {
   {
     try
     {
-      //el metodo suscribe es asincrona por lo que no bloquea el hilo de ejecucion, por lo que lo convertimos
+      //el metodo suscribe es asincrono por lo que no bloquea el hilo de ejecucion, por lo que lo convertimos
       //en promesa para poder bloquearlo
 
       const respuesta = await firstValueFrom(this.http.getData());//Convertimos el observable a una promesa
@@ -63,15 +63,13 @@ export class PreguntadosComponent implements OnInit {
       });    
 
       this.elegirPreguntaActual();
-
-      console.log(this.preguntaActual.correctAnswers);
     }
     catch(eror : any){}
   }
 
   elegirPreguntaActual() : void
   {
-    if(this.preguntas.length == 7)
+    if(this.preguntas.length == 0)
     {
       this.preguntaActual = {} as IPregunta;
       Swal.fire({
@@ -85,7 +83,7 @@ export class PreguntadosComponent implements OnInit {
       }).then((respuesta) => {
         if(respuesta.isConfirmed)
         {
-          this.volverAEmpezar();
+          this.elegirPreguntaPrimeraVez();
         }
         else if(respuesta.isDenied)
         {
@@ -125,10 +123,6 @@ export class PreguntadosComponent implements OnInit {
     }
     
     return nuevoArray;
-  }
-
-  volverAEmpezar(): void {
-      
   }
 
 

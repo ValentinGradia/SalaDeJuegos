@@ -6,6 +6,7 @@ import path from 'path';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { MayoromenorComponent } from './componentes/mayoromenor/mayoromenor.component';
 import { AhorcadoComponent } from './componentes/ahorcado/ahorcado.component';
+import { PreguntadosComponent } from './componentes/preguntados/preguntados.component';
 
 export const routes: Routes = [
     {
@@ -36,6 +37,10 @@ export const routes: Routes = [
     {
         path : 'ahorcado',
         component : AhorcadoComponent
+    },
+    {
+        path : 'preguntados',
+        component : PreguntadosComponent
     },
     {
         path : '**',

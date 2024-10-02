@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { IJuego } from '../../interfaces/IJuego';
 
 @Component({
   selector: 'app-ahorcado',
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './ahorcado.component.html',
   styleUrl: './ahorcado.component.css'
 })
-export class AhorcadoComponent implements OnInit {
+export class AhorcadoComponent implements OnInit, IJuego {
 
   letras : Array<string> = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
@@ -25,7 +26,7 @@ export class AhorcadoComponent implements OnInit {
 
   letrasApretadas : Array<string> = [];
 
-  intentos : number = 10;
+  intentos = 6;
 
   constructor(private router : Router){}
 
@@ -90,6 +91,8 @@ export class AhorcadoComponent implements OnInit {
       }
     }
 
+    this.verificarIntentos();
+
     var letrasJuntas = this.letrasARemover.join('');
 
     var cantLetrasIguales = 0
@@ -106,6 +109,7 @@ export class AhorcadoComponent implements OnInit {
         }
       }
     }
+
 
     if(cantLetras == cantLetrasIguales)
     {
@@ -134,12 +138,39 @@ export class AhorcadoComponent implements OnInit {
   }
 
 
+  verificarIntentos() : void
+  {
+    if(this.intentos == 0)
+    {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Tristemente haz perdido :(, La palabra era " + this.palabraAdivinar,
+        text : "¿Quieres volver a jugar?",
+        showConfirmButton: true,
+        confirmButtonText : "Si",
+        showDenyButton: true,
+        denyButtonText : "No"
+      }).then((respuesta) => {
+        if(respuesta.isConfirmed)
+        {
+          this.volverAEmpezar();
+        }
+        else if(respuesta.isDenied)
+        {
+          this.router.navigateByUrl('/home');
+        }
+      });
+    }
+  }
+
+
   volverAEmpezar() : void
   {
     this.elegirPalabra();
     this.letrasARemover = [];
     this.letrasApretadas = [];
-    this.intentos = 10;
+    this.intentos = 6;
   }
 
 }

@@ -1,23 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { IJuego } from '../../interfaces/IJuego';
 
 @Component({
   selector: 'app-mayoromenor',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './mayoromenor.component.html',
   styleUrl: './mayoromenor.component.css'
 })
-export class MayoromenorComponent implements OnInit {
+export class MayoromenorComponent implements OnInit, IJuego {
 
   cartaActual !: number;
   cartaAnterior : number | null = null;
   srcCartaActual : string = "assets/cartas/mazo.png";
   puntaje : number = 0;
+  intentos : number = 5;
 
-  constructor(){}
+  constructor(private router: Router){}
 
   ngOnInit(): void {
     Swal.fire({
@@ -53,6 +56,14 @@ export class MayoromenorComponent implements OnInit {
     {
       this.puntaje++;
     }
+    else
+    {
+      this.intentos--;
+    }
+
+    this.verificarIntentos();
+
+    
   }
 
   menor()
@@ -63,6 +74,45 @@ export class MayoromenorComponent implements OnInit {
     {
       this.puntaje++;
     }
+    else
+    {
+      this.intentos--;
+    }
+
+    this.verificarIntentos();
+  }
+
+  verificarIntentos()
+  {
+    if(this.intentos == 0)
+      {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Tristemente haz perdido :(",
+          text : "¿Quieres volver a jugar?",
+          showConfirmButton: true,
+          confirmButtonText : "Si",
+          showDenyButton: true,
+          denyButtonText : "No"
+        }).then((respuesta) => {
+          if(respuesta.isConfirmed)
+          {
+            this.volverAEmpezar();
+          }
+          else if(respuesta.isDenied)
+          {
+            this.router.navigateByUrl('/home');
+          }
+        });
+      }
+  }
+
+  volverAEmpezar()
+  {
+    this.intentos = 6;
+    this.puntaje = 0;
+    this.mostrarCarta();
   }
 
 }

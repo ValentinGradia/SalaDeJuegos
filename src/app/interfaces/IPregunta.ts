@@ -2,8 +2,7 @@ export interface IPregunta
 {
     id : string;
     category: string;
-    format: string;
     question: string;
-    correctAnswer: string;
+    correctAnswers: string;
     incorrectAnswers : Array<string>;
 }

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { HttpService } from '../../services/http.service';
 import { IPregunta } from '../../interfaces/IPregunta';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-preguntados',
@@ -17,13 +18,15 @@ import { IPregunta } from '../../interfaces/IPregunta';
 })
 export class PreguntadosComponent implements OnInit {
 
-  preguntas : Array<object> = [];
-  preguntaActual : object = {};
-  preguntasRespondidas : Array<object> = [];
+  preguntas : Array<any> = [];
+  preguntaActual : IPregunta = {} as IPregunta ;
+  respuestasActuales : Array<string> = [];
+  respuestasCorrectas : number  = 0;
 
   constructor(private router: Router, private http: HttpService){}
 
   ngOnInit(): void {
+    this.elegirPreguntaPrimeraVez();
     Swal.fire({
       title: "REGLAS",
       text : 'A continuacion se van a ir mostrando preguntas las cuales deberas responder de manera correcta. Por cada respuesta correcta sumaras puntaje. Buena suerte!',
@@ -35,38 +38,128 @@ export class PreguntadosComponent implements OnInit {
           animate__faster
         `
       }
-    }).then((result) => {
-      if(result.isConfirmed)
-        this.elegirPregunta();
     });
   }
 
-  async elegirPregunta() : Promise<void>
+  //Solo la primera vez para que se me cargen todas las preguntas para luego no tener que repetirlas
+  async elegirPreguntaPrimeraVez() : Promise<void>
   {
-    await this.http.getData().subscribe((respuesta) => {
-      var info = respuesta.questions;
-      //console.log(info);
+    try
+    {
+      //el metodo suscribe es asincrona por lo que no bloquea el hilo de ejecucion, por lo que lo convertimos
+      //en promesa para poder bloquearlo
+
+      const respuesta = await firstValueFrom(this.http.getData());//Convertimos el observable a una promesa
+      const info = respuesta.questions;
+
       info.forEach((elemento : IPregunta)=> {
         var pregunta = {
           id : elemento.id,
           question : elemento.question,
-          correctAnswers : elemento.correctAnswer,
+          correctAnswers : elemento.correctAnswers,
           incorrectAnswers : elemento.incorrectAnswers
         }
-
         this.preguntas.push(pregunta);
       });    
-    })
 
-    this.preguntaActual = this.preguntas[Math.floor(Math.random() * this.preguntas.length)];
+      this.elegirPreguntaActual();
+
+      console.log(this.preguntaActual.correctAnswers);
+    }
+    catch(eror : any){}
+  }
+
+  elegirPreguntaActual() : void
+  {
+    if(this.preguntas.length == 7)
+    {
+      this.preguntaActual = {} as IPregunta;
+      Swal.fire({
+        position: "center",
+        title: "Haz acertado " + this.respuestasCorrectas + " respuestas",
+        text : "¿Quieres volver a jugar?",
+        showConfirmButton: true,
+        confirmButtonText : "Si",
+        showDenyButton: true,
+        denyButtonText : "No"
+      }).then((respuesta) => {
+        if(respuesta.isConfirmed)
+        {
+          this.volverAEmpezar();
+        }
+        else if(respuesta.isDenied)
+        {
+          this.router.navigateByUrl('/home');
+        }
+      });
+    }
+    else
+    {
+      this.preguntaActual = this.preguntas[Math.floor(Math.random() * this.preguntas.length)];
+  
+      this.concatenarRespuestas();
+    }
+  }
+
+  //las respuestas correctas e incorrectas vienen separadas por lo que las combinamos en un array
+  concatenarRespuestas() : void
+  {
+    
+    this.respuestasActuales = [...this.preguntaActual.incorrectAnswers];
+    this.respuestasActuales.push(this.preguntaActual.correctAnswers);
+
+    this.respuestasActuales = this.desordenarRespuestas(this.respuestasActuales);
+  }
+
+  
+  desordenarRespuestas(array : string[]) : string[]
+  {
+    var nuevoArray = [...array];//copiamos los elementos
+    
+    for (let i = nuevoArray.length - 1; i > 0; i--) {
+      //indice aleatorio
+      const j = Math.floor(Math.random() * (i + 1));
+      
+      // intercambiar elementos
+      [nuevoArray[i], nuevoArray[j]] = [nuevoArray[j], nuevoArray[i]];
+    }
+    
+    return nuevoArray;
   }
 
   volverAEmpezar(): void {
       
   }
 
-  verificarIntentos(): void {
-      
+
+  delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+  async manejarRespuesta(respuesta : string, index : number): Promise<void>
+  {
+
+      const boton = document.getElementById(index.toString());
+      if(this.preguntaActual.correctAnswers == respuesta)
+      {
+        this.respuestasCorrectas++;
+        boton!.style.backgroundColor = "green";
+      }
+      else{boton!.style.backgroundColor = "red";}
+  
+      //detenemos el tiempo para que se muestre el color del boton (correcto o incorrecto)
+      await this.delay(300);
+  
+      //sacamos la pregunta actual para que no se repita
+      this.preguntas = this.preguntas.filter((pregunta : IPregunta) => pregunta !== this.preguntaActual);
+  
+      this.respuestasActuales = [];
+      
+      boton!.style.backgroundColor = "#8b9fa2";
+      this.elegirPreguntaActual();
+    
+  }
+
+
 
 }

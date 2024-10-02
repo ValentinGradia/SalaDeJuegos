@@ -1,11 +1,14 @@
-<div class="container">
-    <div class="intentos">
-
-    </div>
-    <div class="pregunta">
-
-    </div>
-    <div class="respuestas">
-        
+<div class="body">
+    <div class="container">
+        <div class="pregunta">
+            <h2>{{preguntaActual.question}}</h2>
+        </div>
+        <div class="respuestas">
+            
+            @for (respuesta of respuestasActuales; track $index) {
+                <!--index va a ser el id para poder identifiar el boton y poder capturarlo desde el TS-->
+                <button id="{{$index}}" class="respuesta" (click)="manejarRespuesta(respuesta, $index)">{{respuesta}}</button>
+            }
+        </div>
     </div>
 </div>

@@ -7,6 +7,7 @@ import { ChatComponent } from './componentes/chat/chat.component';
 import { MayoromenorComponent } from './componentes/mayoromenor/mayoromenor.component';
 import { AhorcadoComponent } from './componentes/ahorcado/ahorcado.component';
 import { PreguntadosComponent } from './componentes/preguntados/preguntados.component';
+import { BlackjackComponent } from './componentes/blackjack/blackjack.component';
 
 export const routes: Routes = [
     {
@@ -41,6 +42,10 @@ export const routes: Routes = [
     {
         path : 'preguntados',
         component : PreguntadosComponent
+    },
+    {
+        path : 'blackJack',
+        component : BlackjackComponent
     },
     {
         path : '**',

@@ -46,7 +46,7 @@ export class PreguntadosComponent implements OnInit {
   {
     try
     {
-      //el metodo suscribe es asincrono por lo que no bloquea el hilo de ejecucion, por lo que lo convertimos
+      //el metodo suscribe es asincrono por lo que no bloquea el hilo de ejecucion,entonces lo convertimos
       //en promesa para poder bloquearlo
 
       const respuesta = await firstValueFrom(this.http.getData());//Convertimos el observable a una promesa

@@ -33,7 +33,7 @@ export class AhorcadoComponent implements OnInit, IJuego {
   ngOnInit(): void {
     Swal.fire({
       title: "REGLAS",
-      text : 'Tendras que adivinar la palabra haciendo click en las letras que piensas que tendra la palabra. Si la letra ya la presionaste se ocultara para que no te olvides cuales presionaste. Dispondras de 10 intentos para adivinarla, buena suerte!',
+      text : 'Tendras que adivinar la palabra haciendo click en las letras que piensas que tendra la palabra. Si la letra ya la presionaste se ocultara para que no te olvides cuales presionaste. Dispondras de 6 intentos para adivinarla, buena suerte!',
       confirmButtonText: "Entendido",
       hideClass: {
         popup: `

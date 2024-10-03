@@ -26,6 +26,11 @@ img{
 
 .dealer, .usuario {
     text-align: center;
+    
+}
+
+.usuario{
+    display: flex;
 }
 
 .rojo{
@@ -36,12 +41,44 @@ img{
     color: black;
 }
 
+
+.button
+{
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    width: 100px;
+    height: 60px;
+    transition: background-color 0.3s;
+}
+
+.pedir{
+    background-color: rgb(51, 165, 51);
+}
+
+.quedarse{
+    background-color: rgb(206, 54, 54);
+}
+
+.pedir:hover {
+    background-color: #197736; /* Color de fondo al pasar el mouse */
+}
+
+.quedarse:hover{
+    background-color: rgb(145, 50, 50);
+}
+
 h2{
     color: white;
 }
 
 .usuario{
     margin-top: 180px;
+    align-items: center;
 }
 
 .cartas-dealer,.cartas-usuario{

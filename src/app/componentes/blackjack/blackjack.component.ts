@@ -41,9 +41,6 @@ export class BlackjackComponent implements OnInit {
     this.cartasUsuario.push(this.cartasBlackjack[this.indiceAleatorio()]);
     this.borrarCarta(this.cartasBlackjack[this.indiceAleatorio()]);
 
-    //Segunda carta dealer
-    this.cartasDealer.push(this.cartasBlackjack[this.indiceAleatorio()]);
-    this.borrarCarta(this.cartasBlackjack[this.indiceAleatorio()]);
 
     //Segunda carta usuario
     this.cartasUsuario.push(this.cartasBlackjack[this.indiceAleatorio()]);
@@ -51,7 +48,18 @@ export class BlackjackComponent implements OnInit {
 
     this.sumaDealer = this.calcularSuma(this.cartasDealer);
 
+    if(this.sumaDealer == 22)
+    {
+      this.sumaDealer = 21;
+    }
+
     this.sumaUsuario = this.calcularSuma(this.cartasUsuario);
+
+    if(this.sumaUsuario == 22)
+    {
+      this.sumaUsuario = 21;
+    }
+
 
   }
 
@@ -97,6 +105,81 @@ export class BlackjackComponent implements OnInit {
     });
 
     return sumaTotal;
+  }
+
+
+  //Dependiendo el palo que toque le cambiamos el color (Rojo o negro)
+  verificarPalo(carta : string) : boolean
+  {
+    var palo = '';
+    if(carta.length !== 2)
+    {
+      palo = carta.charAt(2);
+    }
+    else{palo = carta.charAt(1);}
+
+    if(palo == "♥" || palo == "♦")
+    {
+      return true;
+    }
+    else{return false}
+
+  }
+
+  pedirCarta(jugador : string) : void
+  {
+    if(jugador == "usuario")
+    {
+      this.cartasUsuario.push(this.cartasBlackjack[this.indiceAleatorio()]);
+      this.borrarCarta(this.cartasBlackjack[this.indiceAleatorio()]);
+  
+      this.sumaUsuario = this.calcularSuma(this.cartasUsuario);
+
+      if(this.verificarSiSePaso(this.sumaUsuario!))
+      {
+        console.log("perdiste");
+      }
+    }
+    else
+    {
+      this.cartasDealer.push(this.cartasBlackjack[this.indiceAleatorio()]);
+      this.borrarCarta(this.cartasBlackjack[this.indiceAleatorio()]);
+  
+      this.sumaDealer = this.calcularSuma(this.cartasDealer);
+
+      while(this.sumaDealer < 16)
+      {
+        this.cartasDealer.push(this.cartasBlackjack[this.indiceAleatorio()]);
+        this.borrarCarta(this.cartasBlackjack[this.indiceAleatorio()]);
+    
+        this.sumaDealer = this.calcularSuma(this.cartasDealer);
+      }
+
+      if (this.verificarSiSePaso(this.sumaDealer!)) {
+        console.log("ganaste");
+    } else {
+        console.log(this.sumaDealer! > this.sumaUsuario! ? "perdiste" : this.sumaDealer! == this.sumaUsuario! ? "empate" : "ganaste");
+    }
+
+    }
+
+  }
+
+  verificarSiSePaso(numero : number) : boolean
+  {
+    if(numero > 21){return true;}else{return false;}
+  }
+
+  quedarse() : void
+  {
+    if(this.sumaDealer! < 16)
+    {
+      this.pedirCarta("dealer");
+    }
+    else
+    {
+      console.log(this.sumaUsuario! > this.sumaDealer! ? "ganaste" : this.sumaDealer! > this.sumaUsuario! ? "perdiste" : "empate");
+    }
   }
 
 

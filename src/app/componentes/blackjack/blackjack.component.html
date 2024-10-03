@@ -2,16 +2,24 @@
     <div class="blackjack-container">
         <div class="dealer">
             <h2>Dealer</h2>
+            <h3 style="color: white;">{{sumaDealer}}</h3>
             <div class="cartas-dealer">
-                <div class="card">A♠</div>
-                <div class="card">10♦</div>
+                @for (cartas of cartasDealer; track $index) {
+                    <div class="card" [ngClass]="{'rojo' : verificarPalo(cartas)}">{{cartas}}</div>
+                }
             </div>
         </div>
         <div class="usuario">
-            <div class="cartas-usuario">
-                <div class="card">K♠</div>
-                <div class="card">5♣</div>
+            <button (click)="pedirCarta('usuario')" class="button pedir"> Pedir</button>
+            <div>
+                <h3 style="color: rgb(0, 0, 0);">{{sumaUsuario}}</h3>
+                <div class="cartas-usuario">
+                    @for (cartas of cartasUsuario; track $index) {
+                        <div class="card" [ngClass]="{'rojo' : verificarPalo(cartas)}">{{cartas}}</div>
+                    }
+                </div>
             </div>
+            <button (click)="quedarse()" class="button quedarse">Quedarse</button>
         </div>
     </div>
 </div>

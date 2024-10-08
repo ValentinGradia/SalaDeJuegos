@@ -20,6 +20,7 @@ export class BlackjackComponent implements OnInit {
     'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦'
   ];
 
+  copiaCartas : string[] = [...this.cartasBlackjack];
   cartasJugadas : Array<string> = [];
   cartasDealer : Array<string> = [];
   cartasUsuario : Array<string> = [];
@@ -129,6 +130,9 @@ export class BlackjackComponent implements OnInit {
 
   pedirCarta(jugador : string) : void
   {
+
+    console.log(this.cartasBlackjack.length);
+
     if(jugador == "usuario")
     {
       this.cartasUsuario.push(this.cartasBlackjack[this.indiceAleatorio()]);
@@ -143,25 +147,19 @@ export class BlackjackComponent implements OnInit {
     }
     else
     {
-      this.cartasDealer.push(this.cartasBlackjack[this.indiceAleatorio()]);
-      this.borrarCarta(this.cartasBlackjack[this.indiceAleatorio()]);
-  
-      this.sumaDealer = this.calcularSuma(this.cartasDealer);
-
-      while(this.sumaDealer < 16)
+      do
       {
         this.cartasDealer.push(this.cartasBlackjack[this.indiceAleatorio()]);
         this.borrarCarta(this.cartasBlackjack[this.indiceAleatorio()]);
     
         this.sumaDealer = this.calcularSuma(this.cartasDealer);
-      }
+      }while(this.sumaDealer < 16)
 
       if (this.verificarSiSePaso(this.sumaDealer!)) {
         this.actualizarVictorias('suma');
-    } else {
-        this.sumaDealer! > this.sumaUsuario! ? this.actualizarVictorias('resta') : this.sumaDealer! == this.sumaUsuario! ?  this.actualizarVictorias('empate') : this.actualizarVictorias('suma');
-    }
-
+      } else {
+          this.sumaDealer! > this.sumaUsuario! ? this.actualizarVictorias('resta') : this.sumaDealer! == this.sumaUsuario! ?  this.actualizarVictorias('empate') : this.actualizarVictorias('suma');
+      }
     }
 
   }
@@ -188,9 +186,8 @@ export class BlackjackComponent implements OnInit {
   {
     this.sumaDealer = null;
     this.sumaUsuario = null;
-    this.cartasJugadas.forEach(element => {
-      this.cartasBlackjack.push(element);
-    });
+    this.cartasBlackjack = this.copiaCartas;
+    this.cartasJugadas = [];
     this.cartasDealer = [];
     this.cartasUsuario = [];
     

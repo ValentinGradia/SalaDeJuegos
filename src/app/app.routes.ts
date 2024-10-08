@@ -8,6 +8,7 @@ import { MayoromenorComponent } from './componentes/mayoromenor/mayoromenor.comp
 import { AhorcadoComponent } from './componentes/ahorcado/ahorcado.component';
 import { PreguntadosComponent } from './componentes/preguntados/preguntados.component';
 import { BlackjackComponent } from './componentes/blackjack/blackjack.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -33,19 +34,23 @@ export const routes: Routes = [
     },
     {
         path : 'mayorOMenor',
-        component : MayoromenorComponent
+        component : MayoromenorComponent,
+        canActivate : [authGuard]
     },
     {
         path : 'ahorcado',
-        component : AhorcadoComponent
+        component : AhorcadoComponent,
+        canActivate : [authGuard]
     },
     {
         path : 'preguntados',
-        component : PreguntadosComponent
+        component : PreguntadosComponent,
+        canActivate : [authGuard]
     },
     {
         path : 'blackJack',
-        component : BlackjackComponent
+        component : BlackjackComponent,
+        canActivate : [authGuard]
     },
     {
         path : '**',

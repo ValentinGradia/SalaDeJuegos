@@ -32,6 +32,7 @@ export class HeaderComponent implements OnDestroy {
     })
   }
 
+
   cerrarSesion() {
     Swal.fire({
       title: "¿Estás seguro que queres cerrar sesión?",

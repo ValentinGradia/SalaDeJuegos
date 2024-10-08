@@ -26,7 +26,6 @@ export class PreguntadosComponent implements OnInit {
   constructor(private router: Router, private http: HttpService){}
 
   ngOnInit(): void {
-    this.elegirPreguntaPrimeraVez();
     Swal.fire({
       title: "REGLAS",
       text : 'A continuacion se van a ir mostrando preguntas las cuales deberas responder de manera correcta. Por cada respuesta correcta sumaras puntaje. Buena suerte!',
@@ -39,6 +38,7 @@ export class PreguntadosComponent implements OnInit {
         `
       }
     });
+    this.elegirPreguntaPrimeraVez();
   }
 
   //Solo la primera vez para que se me cargen todas las preguntas para luego no tener que repetirlas
@@ -64,7 +64,9 @@ export class PreguntadosComponent implements OnInit {
 
       this.elegirPreguntaActual();
     }
-    catch(eror : any){}
+    catch(eror : any){
+      console.log("error");
+    }
   }
 
   elegirPreguntaActual() : void

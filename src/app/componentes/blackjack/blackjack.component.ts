@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-blackjack',
@@ -24,6 +25,7 @@ export class BlackjackComponent implements OnInit {
   cartasUsuario : Array<string> = [];
   sumaDealer : number | null = null;
   sumaUsuario : number | null = null;
+  victorias : number = 0;
 
   constructor(){}
 
@@ -59,7 +61,6 @@ export class BlackjackComponent implements OnInit {
     {
       this.sumaUsuario = 21;
     }
-
 
   }
 
@@ -137,7 +138,7 @@ export class BlackjackComponent implements OnInit {
 
       if(this.verificarSiSePaso(this.sumaUsuario!))
       {
-        console.log("perdiste");
+        this.actualizarVictorias('resta');
       }
     }
     else
@@ -156,14 +157,46 @@ export class BlackjackComponent implements OnInit {
       }
 
       if (this.verificarSiSePaso(this.sumaDealer!)) {
-        console.log("ganaste");
+        this.actualizarVictorias('suma');
     } else {
-        console.log(this.sumaDealer! > this.sumaUsuario! ? "perdiste" : this.sumaDealer! == this.sumaUsuario! ? "empate" : "ganaste");
+        this.sumaDealer! > this.sumaUsuario! ? this.actualizarVictorias('resta') : this.sumaDealer! == this.sumaUsuario! ?  this.actualizarVictorias('empate') : this.actualizarVictorias('suma');
     }
 
     }
 
   }
+
+  actualizarVictorias(calculo : string) : void
+  {
+
+    if(calculo == 'suma')
+    {
+      this.finalizarJuegoMomentaneo('victoria');
+      this.victorias++
+    }
+    else if(calculo == 'resta')
+    {
+      if(this.victorias > 0){
+        this.victorias--;
+      }
+      this.finalizarJuegoMomentaneo('derrota');
+    }
+    else{this.finalizarJuegoMomentaneo('empate');}
+  }
+
+  volverAJugar() : void
+  {
+    this.sumaDealer = null;
+    this.sumaUsuario = null;
+    this.cartasJugadas.forEach(element => {
+      this.cartasBlackjack.push(element);
+    });
+    this.cartasDealer = [];
+    this.cartasUsuario = [];
+    
+    this.repartirCartas();
+  }
+
 
   verificarSiSePaso(numero : number) : boolean
   {
@@ -178,8 +211,24 @@ export class BlackjackComponent implements OnInit {
     }
     else
     {
-      console.log(this.sumaUsuario! > this.sumaDealer! ? "ganaste" : this.sumaDealer! > this.sumaUsuario! ? "perdiste" : "empate");
+      this.sumaUsuario! > this.sumaDealer! ? this.actualizarVictorias('suma') : this.sumaDealer! > this.sumaUsuario! ? this.actualizarVictorias('resta') : this.actualizarVictorias('empate');
     }
+  }
+
+  async finalizarJuegoMomentaneo(resultado : string) : Promise<void>
+  {
+    const icono = resultado == 'victoria' ? "success" : resultado == 'derrota' ? 'error' : 'info';
+    const mensaje = resultado == 'victoria' ? "Haz ganado" : resultado == 'derrota' ? 'Haz perdido' : 'empate';
+
+    await Swal.fire({
+      position: "center",
+      icon: icono,
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    this.volverAJugar();
   }
 
 

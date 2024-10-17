@@ -10,7 +10,7 @@ export class HttpService {
   private api : string = "https://api.quiz-contest.xyz/questions?limit=10&page=1&category=geography";
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient  ) { }
 
   getData(): Observable<any>
   {

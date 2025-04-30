@@ -1,27 +1,27 @@
 # SalaJuegos
+---
+## Home 
+<img width="957" alt="home" src="https://github.com/user-attachments/assets/43a67838-7da4-4c59-af48-86f730bd1fb8" />
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+## Validacion
+<img width="957" alt="debemos estar logueado" src="https://github.com/user-attachments/assets/e4dca840-4a97-4168-b2bb-3ceb9f97b062" />
 
-## Development server
+## Inicio de sesion
+<img width="958" alt="login" src="https://github.com/user-attachments/assets/b55d3d61-398f-4a0b-9140-0ffdfd74c6d7" />
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Ahorcado
+<img width="958" alt="ahorcado" src="https://github.com/user-attachments/assets/da4e1fdc-4e36-46a6-8dc3-6219e8834cf6" />
 
-## Code scaffolding
+## Mayor o menor
+<img width="959" alt="mayor o menor reglas" src="https://github.com/user-attachments/assets/3ee5ee2c-fc49-4103-8ab0-5d5094a729bc" />
+<img width="958" alt="mayor o menor" src="https://github.com/user-attachments/assets/86de0ed8-b7af-412e-95e2-2fdb3eefada0" />
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Preguntados
+<img width="959" alt="preguntados" src="https://github.com/user-attachments/assets/021d96c6-0da6-49a6-8f86-e6a32840b5f7" />
 
-## Build
+## Black Jack
+<img width="956" alt="blackjack" src="https://github.com/user-attachments/assets/32a80ca3-5321-423d-8f29-99b0a049ab75" />
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Cerrar Sesion
+<img width="958" alt="cerrar sesion" src="https://github.com/user-attachments/assets/210a4fee-f031-4b5e-90d7-d6dae9aef719" />
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
